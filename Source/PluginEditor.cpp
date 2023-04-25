@@ -17,30 +17,15 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
     // editor's size to whatever you need it to be.
     setSize (230, 230);
     
-     // Cutoff Frequency
-     cutoffValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "cutoff", cutoffDial);
-     cutoffDial.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-     cutoffDial.setRange(20.0f, 20000.0f, 0.0f);
-     cutoffDial.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-     addAndMakeVisible(&cutoffDial);
+     // Stereo Width
+    stereoWidthValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "stereoWidth", stereoWidthSlider);
+    stereoWidthSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    stereoWidthSlider.setRange(0.0f, 2.0f, 1.0f);
+    stereoWidthSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
+    addAndMakeVisible(&stereoWidthSlider);
     
     
-    // Resonance
-    resonanceValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState,"resonance",
-    resonanceDial);
-    resonanceDial.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    resonanceDial.setRange(0.0f, 1.10f, 0.0f);
-    resonanceDial.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-    addAndMakeVisible(&resonanceDial);
-    
-    
-    // Drive
-    driveValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "drive",
-    driveDial);
-    driveDial.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    driveDial.setRange(1.0f, 25.0f, 1.0f);
-    driveDial.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
-    addAndMakeVisible(&driveDial);
+
     
     
     // Mode Selection Input
@@ -81,9 +66,7 @@ void MidsideProjectAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    cutoffDial.setBounds(10, 40, 100, 100);
-    resonanceDial.setBounds(120, 40, 100, 100);
-    driveDial.setBounds(10, 130, 100, 100);
+    stereoWidthSlider.setBounds(10, 30, 380, 50);
     modeSelInput.setBounds(127.5, 169.5, 75, 25);
     modeSelOutput.setBounds(10, 169.5, 75, 25);
 }

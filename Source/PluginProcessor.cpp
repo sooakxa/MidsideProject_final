@@ -20,23 +20,20 @@ MidsideProjectAudioProcessor::MidsideProjectAudioProcessor()
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
                        ), treeState(*this, nullptr, juce::Identifier("PARAMETERS"),
-                                     { std::make_unique<juce::AudioParameterFloat>("cutoff", "Cutoff", 20.0f, 20000.0f, 20000.0f),
-                                     std::make_unique<juce::AudioParameterFloat>("resonance", "Resonance", 0.0f, 1.10f, 0.15f),
-                                     std::make_unique<juce::AudioParameterFloat>("drive", "Drive", 1.0f, 25.0f, 1.0f),
+                                     { std::make_unique<juce::AudioParameterFloat>("stereoWidth", "Stereo Width", 0.0f, 2.0f, 1.0f),
                                     std::make_unique<juce::AudioParameterChoice>("modeInput", "Input Type", juce::StringArray("Stereo", "Mid-side"), 0),
                                     std::make_unique<juce::AudioParameterChoice>("modeOutput", "Output Type", juce::StringArray("Stereo", "Mid-side"), 0) })
 #endif
-{
-    
-    
-    const juce::StringArray params = { "cutoff", "resonance", "drive", "modeInput", "modeOutput"};
-    for (int i = 0; i <= 3; ++i)
+
     {
     // adds a listener to each parameter in the array.
-    treeState.addParameterListener(params[i], this);
+        treeState.addParameterListener("stereoWidth" this);
+        treeState.addParameterListener("modeInput", this);
+        treeState.addParameterListener("modeOutput", this);
+
     }
     
-}
+
 
 MidsideProjectAudioProcessor::~MidsideProjectAudioProcessor()
 {
@@ -107,8 +104,11 @@ void MidsideProjectAudioProcessor::changeProgramName (int index, const juce::Str
 //==============================================================================
 void MidsideProjectAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    juce::dsp::ProcessSpec spec;
+    spec.sampleRate = sampleRate;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.numChannels = getTotalNumOutputChannels();
+
 }
 
 void MidsideProjectAudioProcessor::releaseResources()
@@ -155,6 +155,10 @@ void MidsideProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
 
    
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
+        
+        juce::dsp::AudioBlock<float> block(buffer);
+       // auto processingContext = juce::dsp::ProcessContextReplacing<float>(block);
+        //AudioProcessor.process(processingContext);
     {
         auto* channelDataL = buffer.getWritePointer(0);
         auto* channelDataR = buffer.getWritePointer(1);
@@ -189,13 +193,27 @@ void MidsideProjectAudioProcessor::setStateInformation (const void* data, int si
     // whose contents will have been created by the getStateInformation() call.
 }
 
-void MidsideProjectAudioProcessor::parameterChanged(const juce::String& parameterID, float
-newValue)
-{
-}
+    
+
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new MidsideProjectAudioProcessor();
 }
+
+// Function called when parameter is changed
+void MidsideProjectAudioProcessor::parameterChanged(const juce::String &parameterID, float newValue)
+{
+    if (parameterID == "stereoWidth") {
+        
+    }
+    else if (parameterID == "modeInput")
+    {
+    
+    }
+    else if (parameterID == "modeOutput")
+
+        
+
+

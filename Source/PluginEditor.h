@@ -26,15 +26,11 @@ public:
 
 private:
     
-    juce::Slider cutoffDial;
-    juce::Slider resonanceDial;
-    juce::Slider driveDial;
+    juce::Slider stereoWidthSlider;
     juce::ComboBox modeSelInput;
     juce::ComboBox modeSelOutput;
     
-    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> cutoffValue;
-    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> resonanceValue;
-    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> driveValue;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> stereoWidthValue;
     std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> modeChoiceInput;
     std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> modeChoiceOutput;
 

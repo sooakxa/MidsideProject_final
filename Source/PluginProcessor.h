@@ -14,7 +14,7 @@
 /**
 */
 class MidsideProjectAudioProcessor  : public juce::AudioProcessor,
-public juce::AudioProcessorValueTreeState::Listener
+                                        public juce::AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================
@@ -62,6 +62,7 @@ public:
 private:
     
     juce::AudioProcessorValueTreeState treeState;
+    //juce::dsp::AudioProcessor<float> MidsideProject;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidsideProjectAudioProcessor)
