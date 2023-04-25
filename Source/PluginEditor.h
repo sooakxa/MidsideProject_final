@@ -29,12 +29,15 @@ private:
     juce::Slider cutoffDial;
     juce::Slider resonanceDial;
     juce::Slider driveDial;
-    juce::ComboBox modeSel;
+    juce::ComboBox modeSelInput;
+    juce::ComboBox modeSelOutput;
     
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> cutoffValue;
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> resonanceValue;
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> driveValue;
-    std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> modeChoice;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> modeChoiceInput;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> modeChoiceOutput;
+
     
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.

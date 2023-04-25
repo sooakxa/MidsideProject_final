@@ -43,16 +43,18 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
     addAndMakeVisible(&driveDial);
     
     
-    // Mode Selection
-    modeSel.addItem("MID", 1);
-    modeSel.addItem("SIDE", 2);
-    modeSel.addItem("HPF12", 3);
-    modeSel.addItem("HPF24", 4);
-    modeSel.addItem("BPF12", 5);
-    modeSel.addItem("BPF24", 6);
-    modeChoice = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(treeState, "mode",
-    modeSel);
-    addAndMakeVisible(&modeSel);
+    // Mode Selection Input
+    modeSelInput.addItem("Stereo", 1);
+    modeSelInput.addItem("Mid-side", 2);
+    modeChoiceInput = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(treeState, "mode", modeSelInput);
+    addAndMakeVisible(&modeSelInput);
+    
+    // Mode Selection Output
+    modeSelOutput.addItem("Stereo", 1);
+    modeSelOutput.addItem("Mid-side", 2);
+    modeChoiceOutput = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(treeState, "mode", modeSelOutput);
+    addAndMakeVisible(&modeSelOutput);
+
 }
 
 MidsideProjectAudioProcessorEditor::~MidsideProjectAudioProcessorEditor()
@@ -82,5 +84,6 @@ void MidsideProjectAudioProcessorEditor::resized()
     cutoffDial.setBounds(10, 40, 100, 100);
     resonanceDial.setBounds(120, 40, 100, 100);
     driveDial.setBounds(10, 130, 100, 100);
-    modeSel.setBounds(127.5, 169.5, 75, 25);
+    modeSelInput.setBounds(127.5, 169.5, 75, 25);
+    modeSelOutput.setBounds(10, 169.5, 75, 25);
 }
