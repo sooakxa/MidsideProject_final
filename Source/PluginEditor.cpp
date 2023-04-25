@@ -46,13 +46,13 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
     // Mode Selection Input
     modeSelInput.addItem("Stereo", 1);
     modeSelInput.addItem("Mid-side", 2);
-    modeChoiceInput = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(treeState, "mode", modeSelInput);
+    modeChoiceInput = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(treeState, "modeInput", modeSelInput);
     addAndMakeVisible(&modeSelInput);
     
     // Mode Selection Output
     modeSelOutput.addItem("Stereo", 1);
     modeSelOutput.addItem("Mid-side", 2);
-    modeChoiceOutput = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(treeState, "mode", modeSelOutput);
+    modeChoiceOutput = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(treeState, "modeOutput", modeSelOutput);
     addAndMakeVisible(&modeSelOutput);
 
 }

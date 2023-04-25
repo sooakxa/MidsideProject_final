@@ -23,13 +23,13 @@ MidsideProjectAudioProcessor::MidsideProjectAudioProcessor()
                                      { std::make_unique<juce::AudioParameterFloat>("cutoff", "Cutoff", 20.0f, 20000.0f, 20000.0f),
                                      std::make_unique<juce::AudioParameterFloat>("resonance", "Resonance", 0.0f, 1.10f, 0.15f),
                                      std::make_unique<juce::AudioParameterFloat>("drive", "Drive", 1.0f, 25.0f, 1.0f),
-                                     std::make_unique<juce::AudioParameterChoice>("mode", "Filter Type",
-                                     juce::StringArray("LPF12", "LPF24", "HPF12", "HPF24", "BPF12", "BPF24"), 0) })
+                                    std::make_unique<juce::AudioParameterChoice>("modeInput", "Input Type", juce::StringArray("Stereo", "Mid-side"), 0),
+                                    std::make_unique<juce::AudioParameterChoice>("modeOutput", "Output Type", juce::StringArray("Stereo", "Mid-side"), 0) })
 #endif
 {
     
     
-    const juce::StringArray params = { "cutoff", "resonance", "drive", "mode" };
+    const juce::StringArray params = { "cutoff", "resonance", "drive", "modeInput", "modeOutput"};
     for (int i = 0; i <= 3; ++i)
     {
     // adds a listener to each parameter in the array.
