@@ -180,7 +180,7 @@ bool MidsideProjectAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* MidsideProjectAudioProcessor::createEditor()
 {
-    return new MidsideProjectAudioProcessorEditor (*this);
+    return new MidsideProjectAudioProcessorEditor (*this, treeState);
 }
 
 //==============================================================================

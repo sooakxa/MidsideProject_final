@@ -10,8 +10,8 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideProjectAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideProjectAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
+    : AudioProcessorEditor (&p), audioProcessor (p), treeState(vts)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
