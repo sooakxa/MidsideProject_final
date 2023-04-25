@@ -16,9 +16,9 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (230, 230);
+    
      // Cutoff Frequency
-     cutoffValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
-    (treeState, "cutoff", cutoffDial);
+     cutoffValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "cutoff", cutoffDial);
      cutoffDial.setSliderStyle(juce::Slider::RotaryVerticalDrag);
      cutoffDial.setRange(20.0f, 20000.0f, 0.0f);
      cutoffDial.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
@@ -44,8 +44,8 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
     
     
     // Mode Selection
-    modeSel.addItem("LPF12", 1);
-    modeSel.addItem("LPF24", 2);
+    modeSel.addItem("MID", 1);
+    modeSel.addItem("SIDE", 2);
     modeSel.addItem("HPF12", 3);
     modeSel.addItem("HPF24", 4);
     modeSel.addItem("BPF12", 5);

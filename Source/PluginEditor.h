@@ -17,8 +17,7 @@
 class MidsideProjectAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
-    MidsideProjectAudioProcessorEditor (MidsideProjectAudioProcessor&,
-    juce::AudioProcessorValueTreeState&);
+    MidsideProjectAudioProcessorEditor (MidsideProjectAudioProcessor&, juce::AudioProcessorValueTreeState&);
     ~MidsideProjectAudioProcessorEditor();
 
     //==============================================================================

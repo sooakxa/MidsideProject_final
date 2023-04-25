@@ -55,7 +55,10 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     void parameterChanged(const juce::String& parameterID, float newValue) override;
-
+    
+    float gainParameter{ 1.0 }; //total gain control
+    float gainMidParameter{ 1.0 }; //MID signal gain control
+    float gainSideParameter{ 1.0 }; //SIDE signal gain control
 private:
     
     juce::AudioProcessorValueTreeState treeState;
