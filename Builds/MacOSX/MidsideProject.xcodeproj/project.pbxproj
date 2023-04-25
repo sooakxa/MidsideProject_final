@@ -52,11 +52,11 @@
 		0D40566229F7F6F600778571 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E6F891598CC090F2298536 /* IOKit.framework */; };
 		0D40566329F7F6F600778571 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A11DF99B5B5938C46B9B41 /* QuartzCore.framework */; };
 		0D40566429F7F6F600778571 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8080DB61A3D075EA669276D3 /* WebKit.framework */; };
+		0D40566C29F8252400778571 /* PluginEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC5BDA0688CAF24777DDA50A /* PluginEditor.cpp */; };
 		0F9A3BD293E62CFE53067557 /* include_juce_audio_plugin_client_VST3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FF5985C634FD54BA0DB37BA /* include_juce_audio_plugin_client_VST3.cpp */; };
 		1767C895AE62BABF6A130716 /* include_juce_gui_basics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A87E0CDD02E8D072C4ABF16 /* include_juce_gui_basics.mm */; };
 		2667F02E5B4292EFD654A64F /* include_juce_dsp.mm in Sources */ = {isa = PBXBuildFile; fileRef = B93611FD556B2ACF27085EE6 /* include_juce_dsp.mm */; };
 		2E2C95CBD3F6415E740A1343 /* include_juce_events.mm in Sources */ = {isa = PBXBuildFile; fileRef = FF51B76E71D27184AC07D2AB /* include_juce_events.mm */; };
-		41689B58766A6A3849939DB4 /* PluginEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AC5BDA0688CAF24777DDA50A /* PluginEditor.cpp */; };
 		46A6C8C14620B380C45EA7E9 /* include_juce_audio_plugin_client_VST_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = E37856A4BE1A0497789E1A20 /* include_juce_audio_plugin_client_VST_utils.mm */; };
 		567DC728F48DB281122C68C8 /* include_juce_gui_extra.mm in Sources */ = {isa = PBXBuildFile; fileRef = 53DC4070C60AAC0AFCE1CF19 /* include_juce_gui_extra.mm */; };
 		575AB6A1812E08A5E0C4FE93 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8080DB61A3D075EA669276D3 /* WebKit.framework */; };
@@ -644,7 +644,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAC7A03F3E699DBC9316F485 /* PluginProcessor.cpp in Sources */,
-				41689B58766A6A3849939DB4 /* PluginEditor.cpp in Sources */,
 				9688BC95A65CDE57E9BC9280 /* include_juce_audio_basics.mm in Sources */,
 				98ED68E8A05B7798353A89CB /* include_juce_audio_devices.mm in Sources */,
 				5F7124CE50BA2B7ED7A9E449 /* include_juce_audio_formats.mm in Sources */,
@@ -684,6 +683,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F9A3BD293E62CFE53067557 /* include_juce_audio_plugin_client_VST3.cpp in Sources */,
+				0D40566C29F8252400778571 /* PluginEditor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
