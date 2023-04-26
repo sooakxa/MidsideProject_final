@@ -15,7 +15,7 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (230, 230);
+    setSize (400, 300);
     
      // Stereo Width
     stereoWidthValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "stereoWidth", stereoWidthSlider);
@@ -24,8 +24,13 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
     stereoWidthSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
     addAndMakeVisible(&stereoWidthSlider);
     
-    
+    // Cutoff frequency
 
+   cutoffValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "cutoff", cutoffSlider);
+   cutoffSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+   cutoffSlider.setRange(20.0f, 20000.0f, 1.0f);
+   cutoffSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
+   addAndMakeVisible(&cutoffSlider);
     
     
     // Mode Selection Input
@@ -49,13 +54,16 @@ MidsideProjectAudioProcessorEditor::~MidsideProjectAudioProcessorEditor()
 //==============================================================================
 void MidsideProjectAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
+    // Background Fill Colour
     g.fillAll(juce::Colours::aqua);
     g.setColour(juce::Colours::black);
+    
     // Title Text
     g.setFont(30);
-    g.drawFittedText("Ladder Filter", 10, 20, 210, 10, juce::Justification::centred, 1, 0.0f);
-    // Frequnecy, Resonance & Drive labels
+    g.drawFittedText("Midside Plugin", 10, 20, 210, 10, juce::Justification::centred, 1, 0.0f);
+    
+    
+    // Slider and ComboBox Lbels
     g.setFont(25);
     g.drawFittedText("F", 55, 85, 10, 10, juce::Justification::centred, 1, 0.0f);
     g.drawFittedText("R", 165, 85, 10, 10, juce::Justification::centred, 1, 0.0f);
@@ -64,9 +72,12 @@ void MidsideProjectAudioProcessorEditor::paint (juce::Graphics& g)
 
 void MidsideProjectAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+   
+    // Slider Placement within UI
     stereoWidthSlider.setBounds(10, 30, 380, 50);
+    cutoffSlider.setBounds(10, 80, 380, 50);
+    
+    // ComboBox Placement within UI
     modeSelInput.setBounds(127.5, 169.5, 75, 25);
     modeSelOutput.setBounds(10, 169.5, 75, 25);
 }

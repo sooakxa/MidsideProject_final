@@ -21,13 +21,15 @@ MidsideProjectAudioProcessor::MidsideProjectAudioProcessor()
                      #endif
                        ), treeState(*this, nullptr, juce::Identifier("PARAMETERS"),
                                      { std::make_unique<juce::AudioParameterFloat>("stereoWidth", "Stereo Width", 0.0f, 2.0f, 1.0f),
+                                    std::make_unique<juce::AudioParameterFloat>("cutoff", "Cutoff", 20.0f, 20000.0f, 200.0f),
                                     std::make_unique<juce::AudioParameterChoice>("modeInput", "Input Type", juce::StringArray("Stereo", "Mid-side"), 0),
                                     std::make_unique<juce::AudioParameterChoice>("modeOutput", "Output Type", juce::StringArray("Stereo", "Mid-side"), 0) })
 #endif
 
     {
     // adds a listener to each parameter in the array.
-        treeState.addParameterListener("stereoWidth" this);
+        treeState.addParameterListener("cutoff", this);
+        treeState.addParameterListener("stereoWidth", this);
         treeState.addParameterListener("modeInput", this);
         treeState.addParameterListener("modeOutput", this);
 
@@ -206,14 +208,20 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 void MidsideProjectAudioProcessor::parameterChanged(const juce::String &parameterID, float newValue)
 {
     if (parameterID == "stereoWidth") {
-        
+        // do something here
     }
-    else if (parameterID == "modeInput")
-    {
-    
+    else if (parameterID == "cutoff") {
+        // do something here
     }
-    else if (parameterID == "modeOutput")
+    else if (parameterID == "modeOutput") {
+        // do something here
+    }
+    else if (parameterID == "modeInput") {
+        // do something here
+    }
+}
 
         
 
 
+        
