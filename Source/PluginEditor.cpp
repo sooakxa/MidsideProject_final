@@ -17,15 +17,14 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
     // editor's size to whatever you need it to be.
     setSize (400, 300);
     
-     // Stereo Width
+     // Stereo width slider
     stereoWidthValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "stereoWidth", stereoWidthSlider);
     stereoWidthSlider.setSliderStyle(juce::Slider::LinearHorizontal);
     stereoWidthSlider.setRange(0.0f, 2.0f, 1.0f);
     stereoWidthSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
     addAndMakeVisible(&stereoWidthSlider);
     
-    // Cutoff frequency
-
+    // Cutoff frequency slider
    cutoffValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "cutoff", cutoffSlider);
    cutoffSlider.setSliderStyle(juce::Slider::LinearHorizontal);
    cutoffSlider.setRange(20.0f, 20000.0f, 1.0f);
