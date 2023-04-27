@@ -21,9 +21,14 @@ MidsideProjectAudioProcessor::MidsideProjectAudioProcessor()
                      #endif
                        ), treeState(*this, nullptr, juce::Identifier("PARAMETERS"),
                                      { std::make_unique<juce::AudioParameterFloat>("stereoWidth", "Stereo Width", 0.0f, 2.0f, 1.0f),
+                           
+                                    std::make_unique<juce::AudioParameterFloat>("midsideBalance", "Mid-Side Balance", 0.0f, 1.0f, 0.5f),
                                     std::make_unique<juce::AudioParameterFloat>("cutoff", "Cutoff", 20.0f, 20000.0f, 200.0f),
                                     std::make_unique<juce::AudioParameterChoice>("modeInput", "Input Type", juce::StringArray("Stereo", "Mid-side"), 0),
-                                    std::make_unique<juce::AudioParameterChoice>("modeOutput", "Output Type", juce::StringArray("Stereo", "Mid-side"), 0) })
+                                    std::make_unique<juce::AudioParameterChoice>("modeOutput", "Output Type", juce::StringArray("Stereo", "Mid-side"), 0)
+
+                           
+                       })
 #endif
 
     {
@@ -32,6 +37,7 @@ MidsideProjectAudioProcessor::MidsideProjectAudioProcessor()
         treeState.addParameterListener("stereoWidth", this);
         treeState.addParameterListener("modeInput", this);
         treeState.addParameterListener("modeOutput", this);
+        treeState.addParameterListener("midsideBalance", this);
 
     }
     
@@ -107,10 +113,13 @@ void MidsideProjectAudioProcessor::changeProgramName (int index, const juce::Str
 void MidsideProjectAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     juce::dsp::ProcessSpec spec;
+    
     spec.sampleRate = sampleRate;
     spec.maximumBlockSize = samplesPerBlock;
     spec.numChannels = getTotalNumOutputChannels();
-
+    
+    lwrFilter.reset();
+    lwrFilter.prepare(spec);
 }
 
 void MidsideProjectAudioProcessor::releaseResources()
@@ -157,16 +166,73 @@ void MidsideProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
 
    
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    {
+        auto* channelData = buffer.getWritePointer (channel);
+        
+        for (int i = 0; i < buffer.getNumSamples(); i++)
+        {
+            //Midside
+
+            float mid = (buffer.getSample(0, i) + buffer.getSample(1, i)) / 2.0f;
+            float side = (buffer.getSample(0, i) - buffer.getSample(1, i)) / 2.0f;
+            float in = channelData[i];
+            float low = 0.0f;
+            float high = 0.0f;
+            float midSideBalanceParam = 0.0f;
+            float widthMultiplier = 0.0f;
+
+            //float midScaled = mid * midSideBalanceParam->get();
+            //float sideScaled = side * (1.0f - midSideBalanceParam->get()) * widthMultiplier;
+
+            //float left = midScaled + sideScaled;
+            //float right = midScaled - sideScaled;
+
+            //outputBuffer.setSample(0, i, left);
+            //outputBuffer.setSample(1, i, right);
+            
+           // float midScaled = mid * midSideBalanceParam->get();
+           // float sideScaled = side * (1.0f - midSideBalanceParam->get()) * widthMultiplier;
+
+           // float left = midScaled + sideScaled;
+           // float right = midScaled - sideScaled;
+
+           // buffer.setSample(0, i, left);
+           // buffer.setSample(1, i, right);
+            
+            //Cut off Processing
+            lwrFilter.processSample(channel, in, low, high);
+            
+            
+            if (modeOutputChoice == 1) {
+                if (low < 0)
+                    low = 0.0f;
+                
+            }
+            else if (modeOutputChoice == 2) {
+                if(low < 0)
+                    low = fabs(low);
+            }
+            
+            if (modeInputChoice == 1) {
+                if (high < 0)
+                    high = 0.0f;
+            }
+            else if (modeInputChoice == 2)
+                if (high < 0)
+                    high = fabs(high);
+                
+            channelData[i] = low + high;
+        }
+    }
         
         juce::dsp::AudioBlock<float> block(buffer);
-       // auto processingContext = juce::dsp::ProcessContextReplacing<float>(block);
+        //auto processingContext = juce::dsp::ProcessContextReplacing<float>(block);
         //AudioProcessor.process(processingContext);
     {
-        auto* channelDataL = buffer.getWritePointer(0);
-        auto* channelDataR = buffer.getWritePointer(1);
+        //auto* channelDataL = buffer.getWritePointer(0);
+        //auto* channelDataR = buffer.getWritePointer(1);
 
-        //channelDataL[sample] = gainParameter * (midData + sideData) / 2;
-        //channelDataR[sample] = gainParameter * (midData - sideData) / 2;
+
     }
 }
 
@@ -209,20 +275,27 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 void MidsideProjectAudioProcessor::parameterChanged(const juce::String &parameterID, float newValue)
 {
     if (parameterID == "stereoWidth") {
-        // do something here
+        //stereoWidth == newValue;
     }
+    
+    else if (parameterID == "midsideBalance") {
+        //midSideBalanceParam(newValue);
+    }
+    
     else if (parameterID == "cutoff") {
-        // do something here
+        lwrFilter.setCutoffFrequency(newValue);
     }
+    
     else if (parameterID == "modeOutput") {
-        // do something here
+        modeOutputChoice = newValue;
     }
+    
     else if (parameterID == "modeInput") {
-        // do something here
+        modeInputChoice = newValue;
     }
 }
 
-        
+ 
 
 
         

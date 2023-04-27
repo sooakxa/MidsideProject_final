@@ -62,7 +62,14 @@ public:
 private:
     
     juce::AudioProcessorValueTreeState treeState;
-    //juce::dsp::AudioProcessor<float> MidsideProject;
+    juce::dsp::LinkwitzRileyFilter<float> lwrFilter;
+    
+    float midsideBalanceChoice = 0;
+    float modeOutputChoice = 0;
+    float modeInputChoice = 0;
+    float mid = 0;
+    float side = 0;
+    float stereoWidth = 0;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidsideProjectAudioProcessor)
