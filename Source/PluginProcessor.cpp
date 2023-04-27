@@ -204,6 +204,7 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new MidsideProjectAudioProcessor();
 }
 
+
 // Function called when parameter is changed
 void MidsideProjectAudioProcessor::parameterChanged(const juce::String &parameterID, float newValue)
 {
