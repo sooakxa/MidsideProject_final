@@ -178,30 +178,29 @@ void MidsideProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
             float in = channelData[i];
             float low = 0.0f;
             float high = 0.0f;
-            float midSideBalanceParam = 0.0f;
+            float midSideBalance = 0.0f;
             float widthMultiplier = 0.0f;
 
-            //float midScaled = mid * midSideBalanceParam->get();
-            //float sideScaled = side * (1.0f - midSideBalanceParam->get()) * widthMultiplier;
+            // float midScaled = mid * midSideBalanceParam->get();
+            // float sideScaled = side * (1.0f - midSideBalanceParam->get()) * widthMultiplier;
 
-            //float left = midScaled + sideScaled;
-            //float right = midScaled - sideScaled;
+            // float left = midScaled + sideScaled;
+            // float right = midScaled - sideScaled;
 
-            //outputBuffer.setSample(0, i, left);
-            //outputBuffer.setSample(1, i, right);
+            // outputBuffer.setSample(0, i, left);
+            // outputBuffer.setSample(1, i, right);
             
-           // float midScaled = mid * midSideBalanceParam->get();
-           // float sideScaled = side * (1.0f - midSideBalanceParam->get()) * widthMultiplier;
+            // float midScaled = mid * midSideBalanceParam->get();
+            // float sideScaled = side * (1.0f - midSideBalanceParam->get()) * widthMultiplier;
 
-           // float left = midScaled + sideScaled;
-           // float right = midScaled - sideScaled;
+            // float left = midScaled + sideScaled;
+            // float right = midScaled - sideScaled;
 
-           // buffer.setSample(0, i, left);
-           // buffer.setSample(1, i, right);
+            // buffer.setSample(0, i, left);
+            // buffer.setSample(1, i, right);
             
             //Cut off Processing
             lwrFilter.processSample(channel, in, low, high);
-            
             
             if (modeOutputChoice == 1) {
                 if (low < 0)
@@ -250,15 +249,18 @@ juce::AudioProcessorEditor* MidsideProjectAudioProcessor::createEditor()
 //==============================================================================
 void MidsideProjectAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    auto state = treeState.copyState();
+    std::unique_ptr<juce::XmlElement> xml(state.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void MidsideProjectAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+
+      if (xmlState.get() != nullptr)
+          if (xmlState->hasTagName(treeState.state.getType()))
+              treeState.replaceState(juce::ValueTree::fromXml(*xmlState));
 }
 
     

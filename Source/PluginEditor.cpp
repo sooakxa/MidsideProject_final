@@ -31,6 +31,13 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
    cutoffSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
    addAndMakeVisible(&cutoffSlider);
     
+    // Midside Balance  slider
+    midsideBalanceValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "midsideBalance", midsideBalanceSlider);
+    midsideBalanceSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    midsideBalanceSlider.setRange(0.0f, 2.0f, 1.0f);
+    midsideBalanceSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
+   addAndMakeVisible(&midsideBalanceSlider);
+    
     
     // Mode Selection Input
     modeSelInput.addItem("Stereo", 1);
@@ -75,6 +82,7 @@ void MidsideProjectAudioProcessorEditor::resized()
     // Slider Placement within UI
     stereoWidthSlider.setBounds(10, 30, 380, 50);
     cutoffSlider.setBounds(10, 80, 380, 50);
+    midsideBalanceSlider.setBounds(10, 150, 380, 50);
     
     // ComboBox Placement within UI
     modeSelInput.setBounds(127.5, 169.5, 75, 25);
