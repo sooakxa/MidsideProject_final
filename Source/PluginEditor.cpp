@@ -15,7 +15,7 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (500, 500);
     
      // Stereo width slider
     stereoWidthValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "stereoWidth", stereoWidthSlider);
@@ -31,12 +31,19 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
    cutoffSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
    addAndMakeVisible(&cutoffSlider);
     
-    // Midside Balance  slider
-    midsideBalanceValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "midsideBalance", midsideBalanceSlider);
-    midsideBalanceSlider.setSliderStyle(juce::Slider::LinearHorizontal);
-    midsideBalanceSlider.setRange(0.0f, 2.0f, 1.0f);
-    midsideBalanceSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
-   addAndMakeVisible(&midsideBalanceSlider);
+    // Mid Gain  slider
+    midGainModuleValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "midGainModule", midGainModuleSlider);
+    midGainModuleSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    midGainModuleSlider.setRange(0.0f, 2.0f, 1.0f);
+    midGainModuleSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
+   addAndMakeVisible(&midGainModuleSlider);
+    
+    // Side Gain  slider
+    sideGainModuleValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "sideGainModule", sideGainModuleSlider);
+    sideGainModuleSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    sideGainModuleSlider.setRange(0.0f, 2.0f, 1.0f);
+    sideGainModuleSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
+   addAndMakeVisible(&sideGainModuleSlider);
     
     
     // Mode Selection Input
@@ -80,11 +87,12 @@ void MidsideProjectAudioProcessorEditor::resized()
 {
    
     // Slider Placement within UI
-    stereoWidthSlider.setBounds(10, 30, 380, 50);
-    cutoffSlider.setBounds(10, 80, 380, 50);
-    midsideBalanceSlider.setBounds(10, 150, 380, 50);
+    stereoWidthSlider.setBounds(10, 35, 380, 50);
+    midGainModuleSlider.setBounds(10, 85, 380, 50);
+    sideGainModuleSlider.setBounds(10, 155, 380, 50);
+    cutoffSlider.setBounds(10, 205, 380, 50);
     
     // ComboBox Placement within UI
-    modeSelInput.setBounds(127.5, 169.5, 75, 25);
-    modeSelOutput.setBounds(10, 169.5, 75, 25);
+    modeSelInput.setBounds(127.5, 320, 75, 25);
+    modeSelOutput.setBounds(10, 320, 75, 25);
 }

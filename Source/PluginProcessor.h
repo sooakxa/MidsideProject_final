@@ -63,8 +63,13 @@ private:
     
     juce::AudioProcessorValueTreeState treeState;
     juce::dsp::LinkwitzRileyFilter<float> lwrFilter;
+    juce::dsp::Gain<float> midGainModule;
+    juce::dsp::Gain<float> sideGainModule;
+
     
-    float midsideBalanceChoice = 0;
+
+    
+    float midGainModuleChoice = 0;
     float modeOutputChoice = 0;
     float modeInputChoice = 0;
     float mid = 0;

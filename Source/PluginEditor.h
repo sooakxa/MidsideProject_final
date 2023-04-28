@@ -26,13 +26,17 @@ public:
 
 private:
     
-    juce::Slider midsideBalanceSlider;
+    juce::Slider midGainModuleSlider;
+    juce::Slider sideGainModuleSlider;
+
     juce::Slider cutoffSlider;
     juce::Slider stereoWidthSlider;
     juce::ComboBox modeSelInput;
     juce::ComboBox modeSelOutput;
     
-    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> midsideBalanceValue;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> midGainModuleValue;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> sideGainModuleValue;
+
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> cutoffValue;
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> stereoWidthValue;
     std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> modeChoiceInput;
