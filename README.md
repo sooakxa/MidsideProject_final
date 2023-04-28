@@ -2,7 +2,7 @@
  
 This is a plugin for digital audio workstations (DAWs) that applies mid-side processing to an audio signal. The plugin is built using the JUCE framework and written in C++.
 
-Features
+<h1>Features</h1>
 
 Control the balance between the center (mid) and side channels of the stereo signal
 Adjust the width of the stereo image
