@@ -22,8 +22,8 @@ MidsideProjectAudioProcessor::MidsideProjectAudioProcessor()
                        ), treeState(*this, nullptr, juce::Identifier("PARAMETERS"),
                                      { std::make_unique<juce::AudioParameterFloat>("stereoWidth", "Stereo Width", 0.0f, 2.0f, 1.0f),
                            
-                                    std::make_unique<juce::AudioParameterFloat>("midGainModule", "Mid Gain", 0.0f, 1.0f, 0.5f),
-                                    std::make_unique<juce::AudioParameterFloat>("sideGainModule", "Side Gain", 0.0f, 1.0f, 0.5f),
+                                    std::make_unique<juce::AudioParameterFloat>("midGainModule", "Mid Gain", 0.0f, 10.0f, 6.0f),
+                                    std::make_unique<juce::AudioParameterFloat>("sideGainModule", "Side Gain", 0.0f, 10.0f, 6.0f),
 
                            
                                     std::make_unique<juce::AudioParameterFloat>("cutoff", "Cutoff", 20.0f, 20000.0f, 200.0f),
@@ -38,6 +38,7 @@ MidsideProjectAudioProcessor::MidsideProjectAudioProcessor()
     // adds a listener to each parameter in the array.
         treeState.addParameterListener("cutoff", this);
         treeState.addParameterListener("stereoWidth", this);
+        
         treeState.addParameterListener("modeInput", this);
         treeState.addParameterListener("modeOutput", this);
         
@@ -173,13 +174,13 @@ void MidsideProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
-    
+        
     if (totalNumInputChannels == 2)
     
         juce::dsp::AudioBlock<float> audioBlock {buffer};
     
 
-   
+   // Midside Processing
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
@@ -193,13 +194,23 @@ void MidsideProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
         {
             const auto mid = 0.5 * (leftData[sample] + rightData[sample]);
             const auto sides = 0.5 * (leftData[sample] - rightData[sample]);
+              
+            const auto newMid = (2.0 - width) * (mid);
+            const auto newSides = width * sides;
+
             
-            const auto newLeft = mid + sides;
-            const auto newRight = mid - sides;
+            //Stereo Width
+            const auto newLeft = newMid + newSides;
+            const auto newRight = newMid - newSides;
             
             leftData[sample] = newLeft;
             rightData[sample] = newRight;
-
+            
+            midGainModule.setGainDecibels(midGain);
+            midGainModule.processSample(mid);
+            
+            sideGainModule.setGainDecibels(sideGain);
+            sideGainModule.processSample(sides);
         }
         }
         {
@@ -211,30 +222,9 @@ void MidsideProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
             float low = 0.0f;
             float high = 0.0f;
              
-             /*
-            float midSideBalance = 0.0f;
-            float widthMultiplier = 0.0f;
 
-           // float midScaled = mid * midSideBalance.get();
-           // float sideScaled = side * (1.0f - midSideBalance.get()) * widthMultiplier;
-            
-            // float left = midScaled + sideScaled;
-            // float right = midScaled - sideScaled;
-
-            // outputBuffer.setSample(0, i, left);
-            // outputBuffer.setSample(1, i, right);
-            
-            // float midScaled = mid * midSideBalanceParam->get();
-            // float sideScaled = side * (1.0f - midSideBalanceParam->get()) * widthMultiplier;
-
-            // float left = midScaled + sideScaled;
-            // float right = midScaled - sideScaled;
-
-            // buffer.setSample(0, i, left);
-            // buffer.setSample(1, i, right);
-            */
             //Cut off Processing
-          //  lwrFilter.processSample(, , low, high);
+           // lwrFilter.processSample(channel, in , low, high);
             
             if (modeOutputChoice == 1) {
                 if (low < 0)

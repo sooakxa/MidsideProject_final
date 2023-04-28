@@ -34,14 +34,14 @@ MidsideProjectAudioProcessorEditor::MidsideProjectAudioProcessorEditor (MidsideP
     // Mid Gain  slider
     midGainModuleValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "midGainModule", midGainModuleSlider);
     midGainModuleSlider.setSliderStyle(juce::Slider::LinearHorizontal);
-    midGainModuleSlider.setRange(0.0f, 2.0f, 1.0f);
+    midGainModuleSlider.setRange(0.0f, 100.0f, 6.0f);
     midGainModuleSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
    addAndMakeVisible(&midGainModuleSlider);
     
     // Side Gain  slider
     sideGainModuleValue = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(treeState, "sideGainModule", sideGainModuleSlider);
     sideGainModuleSlider.setSliderStyle(juce::Slider::LinearHorizontal);
-    sideGainModuleSlider.setRange(0.0f, 2.0f, 1.0f);
+    sideGainModuleSlider.setRange(0.0f, 100.0f, 6.0f);
     sideGainModuleSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 80, 20);
    addAndMakeVisible(&sideGainModuleSlider);
     
@@ -78,21 +78,22 @@ void MidsideProjectAudioProcessorEditor::paint (juce::Graphics& g)
     
     // Slider and ComboBox Lbels
     g.setFont(25);
-    g.drawFittedText("F", 55, 85, 10, 10, juce::Justification::centred, 1, 0.0f);
-    g.drawFittedText("R", 165, 85, 10, 10, juce::Justification::centred, 1, 0.0f);
-    g.drawFittedText("D", 55, 175, 12, 12, juce::Justification::centred, 1, 0.0f);
+    g.drawFittedText("Stereo Width", 55, 55, 50, 50, juce::Justification::centred, 12, 0.0f);
+    g.drawFittedText("Mid Gain", 55, 120, 50, 50, juce::Justification::centred, 8, 0.0f);
+    g.drawFittedText("Side Gain", 55, 200, 50, 50, juce::Justification::centred, 9, 0.0f);
+    g.drawFittedText("Cutoff Frequency", 55, 255, 50, 50, juce::Justification::centred, 16, 0.0f);
 }
 
 void MidsideProjectAudioProcessorEditor::resized()
 {
    
     // Slider Placement within UI
-    stereoWidthSlider.setBounds(10, 35, 380, 50);
-    midGainModuleSlider.setBounds(10, 85, 380, 50);
-    sideGainModuleSlider.setBounds(10, 155, 380, 50);
-    cutoffSlider.setBounds(10, 205, 380, 50);
+    stereoWidthSlider.setBounds(10, 70, 380, 50);
+    midGainModuleSlider.setBounds(10, 135, 380, 50);
+    sideGainModuleSlider.setBounds(10, 215, 380, 50);
+    cutoffSlider.setBounds(10, 265, 380, 50);
     
-    // ComboBox Placement within UI
-    modeSelInput.setBounds(127.5, 320, 75, 25);
-    modeSelOutput.setBounds(10, 320, 75, 25);
+    // Combobox Placement within UI
+    modeSelInput.setBounds(127.5, 350, 75, 25);
+    modeSelOutput.setBounds(10, 350, 75, 25);
 }

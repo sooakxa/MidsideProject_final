@@ -75,6 +75,11 @@ private:
     float mid = 0;
     float side = 0;
     float stereoWidth = 0;
+    float midGain {0.0};
+    float sideGain {0.0};
+    
+    float width {1.0f};
+
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidsideProjectAudioProcessor)
