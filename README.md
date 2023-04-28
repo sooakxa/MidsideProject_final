@@ -4,10 +4,7 @@ This is a plugin for digital audio workstations (DAWs) that applies mid-side pro
 
 <h1>Features</h1>
 
-Control the balance between the center (mid) and side channels of the stereo signal
-Adjust the width of the stereo image
-Process both mono and stereo signals
-Cutoff control 
+Control the balance between the center (mid) and side channels of the stereo signal, adjust the width of the stereo image, process both mono and stereo signals, cutoff control 
 
 
 
