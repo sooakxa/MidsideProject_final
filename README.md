@@ -17,5 +17,6 @@ Adjust the Stereo Width control to change the width of the stereo image. A value
 
 <h1>Acknowledgements</h1>
 
-Drawing inspiration from the mid-side plugins of bygone eras that have revolutionised the landscape of music production.
+Drawing inspiration from the mid-side plugins of bygone eras that have revolutionised the landscape of music production*.
 
+*disclaimer lol
